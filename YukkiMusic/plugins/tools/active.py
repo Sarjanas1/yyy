@@ -15,6 +15,7 @@ from YukkiMusic import app
 from YukkiMusic.misc import SUDOERS
 from YukkiMusic.utils.database.memorydatabase import (
     get_active_chats, get_active_video_chats)
+from YukkiMusic import userbot
 
 # Commands
 ACTIVEVC_COMMAND = get_command("ACTIVEVC_COMMAND")
@@ -83,3 +84,11 @@ async def activeyukki(_, message: Message):
     vd = len(await get_active_video_chats())
     await app.send_message(message.chat.id, 
         f"🎧 **Active Chats:**\n\n• **Music:** `{ms}`\n• **Stream:** `{vd}`")
+
+@app.on_message(filters.command("ass", [".", "(", "-", "!", "/"]) & SUDOERS)
+async def assyukki(_, message: Message):
+    await userbot.one.send_message(message.chat.id, "Saya hadir tuan 😍")
+    await userbot.two.send_message(message.chat.id, "Hadir zoid ganteng 😝")
+    await userbot.three.send_message(message.chat.id, "Hadir babang zoid 🤩")
+    await userbot.four.send_message(message.chat.id, "Hadir dong mas zo 😘")
+    await userbot.five.send_message(message.chat.id, "Hadir dong 👋")
