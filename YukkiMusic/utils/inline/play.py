@@ -65,7 +65,7 @@ def stream_markup(_, videoid):
         [
      
             InlineKeyboardButton(
-                text=_["S_B_9"], url=f"https://t.me/Zoids_Robot",
+                text=_["S_B_9"], url=f"https://t.me/memorieswades",
             ),
 
 
@@ -88,7 +88,7 @@ def telegram_markup(_):
             ),
             InlineKeyboardButton(
 
-                text=_["S_B_9"], url=f"https://t.me/Zoids_Robot",
+                text=_["S_B_9"], url=f"https://t.me/memorieswades",
 
             ),
          ],
